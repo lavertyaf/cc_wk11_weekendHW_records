@@ -5,12 +5,7 @@ const Record = function (options) {
   this.price = options.price;
 };
 
-//options would be
-//{
-  //"title" : "Thriller",
-  //"artist": "MJ",
-  //"cover": "http://",
-  // ...
-//}
+
+
 
 module.exports = Record;

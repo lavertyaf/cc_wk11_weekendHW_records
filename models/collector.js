@@ -43,16 +43,23 @@ Collector.prototype.buyARecord = function (record) {
   };
 };
 
-
-
-
-
-
-// Cinema.prototype.filmByTitle = function (title) {
-//   return this.films.find((film) => {
-//     return film.title === title;
-//   });
+// Collector.prototype.sellARecord = function (record) {
+//
+//   const newCollection = [];
+//   for (const record of this.collection) {
+//     if (this.collection === record ) {
+//     newCollection =  this.collection.removeBytitle(record)
+//     };
+//     return newCollection;
+//   };
 // };
+
+// Collector.prototype.sellARecord = function(collection){
+//   const stillInCollection = this.collection.filter((record) => {
+//     this.collection.record !== record;
+//   })
+//   return stillInCollection
+// }
 
 
 

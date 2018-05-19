@@ -91,18 +91,19 @@ describe('Collector', function () {
     assert.strictEqual(collector.countRecords(), 0);
   });
 
-  xit('should be able to sell record if it is in collection', function () {
+  it('should be able to sell record if it is in collection', function () {
     collector.addARecord(record1);
     collector.addARecord(record2);
-    collector.sellARecord(record1);
+    collector.removeBytitle('Heartbreaker');
     assert.strictEqual(collector.countRecords(), 1);
+    assert.deepStrictEqual(collector.collection, [record1])
   });
 
-  xit('should not be able to sell record if it is not in collection', function () {
+  it('should not be able to sell record if it is not in collection', function () {
     collector.addARecord(record1);
     collector.addARecord(record2);
-    collector.sellARecord(record3);
+    collector.removeBytitle('New Gods');
     assert.strictEqual(collector.countRecords(), 2);
-    assert.strictEqual(collector.collection, [record1, record2]);
+    assert.deepStrictEqual(collector.collection, [record1, record2]);
   });
 });
