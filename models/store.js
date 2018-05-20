@@ -1,7 +1,48 @@
 const Store = function (options) {
   this.name = options.name;
   this.funds = options.funds;
-  this.collection = options.collection;
+  this.stock = options.stock;
+};
+
+Store.prototype.addFunds = function (value){
+  this.funds += value;
+};
+
+
+Store.prototype.countRecords = function (){
+  return this.stock.length;
+};
+
+
+Store.prototype.addARecord = function (record){
+  this.stock.push (record);
+};
+
+// Store.prototype.removeFromStock = function (title) {
+//   const newCollection = [];
+//
+//   for (const record of this.collection) {
+//     if (record.title !== title) {
+//       newCollection.push(record);
+//     }
+//   }
+//   this.collection = newCollection;
+// };
+
+Store.prototype.removeFromStock = function (record) {
+  if (!this.hasRecord(record)) return;
+  const index = this.stock.indexOf(record);
+  this.stock.splice(index, 1);
+};
+
+Store.prototype.sell = function (record) {
+  if (!this.hasRecord(record)) return;
+  this.addFunds(record.price);
+  this.removeFromStock(record);
+};
+
+Store.prototype.hasRecord = function (record) {
+  return this.stock.includes(record);
 };
 
 

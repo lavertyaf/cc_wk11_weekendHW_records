@@ -8,6 +8,10 @@ Collector.prototype.addMoney = function (value) {
   this.wallet += value;
 };
 
+Collector.prototype.takeAwayMoney = function (value) {
+  this.wallet -= value;
+};
+
 Collector.prototype.countRecords = function () {
   return this.collection.length;
 };
@@ -40,18 +44,30 @@ Collector.prototype.removeBytitle = function (title) {
 Collector.prototype.buyARecord = function (record) {
   if (record.price <= this.wallet) {
   this.collection.push(record);
+  this.takeAwayMoney(record.price);
   };
 };
 
+
+Collector.prototype.removeFromCollection = function (record) {
+  if (!this.hasRecord(record)) return;
+  const index = this.collection.indexOf(record);
+  this.collection.splice(index, 1);
+};
+
+Collector.prototype.sell = function (record) {
+  if (!this.hasRecord(record)) return;
+  this.addFunds(record.price);
+  this.removeFromCollection(record);
+};
+
+Collector.prototype.hasRecord = function (record) {
+  return this.collection.includes(record);
+};
+
 // Collector.prototype.sellARecord = function (record) {
-//
-//   const newCollection = [];
-//   for (const record of this.collection) {
-//     if (this.collection === record ) {
-//     newCollection =  this.collection.removeBytitle(record)
-//     };
-//     return newCollection;
-//   };
+//     this.removeBytitle(record);
+//     this.takeAwayMoney(this.collection.record.price);
 // };
 
 // Collector.prototype.sellARecord = function(collection){

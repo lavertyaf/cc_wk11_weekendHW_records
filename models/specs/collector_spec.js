@@ -47,6 +47,12 @@ describe('Collector', function () {
     assert.strictEqual(collector.wallet, 50);
   });
 
+  it('should be able to take away funds', function () {
+    collector.addMoney(50);
+    collector.takeAwayMoney(25);
+    assert.strictEqual(collector.wallet, 25);
+  });
+
   it('should start with no records', function () {
     assert.strictEqual(collector.countRecords(), 0);
   });
@@ -83,6 +89,7 @@ describe('Collector', function () {
     collector.addMoney(60);
     collector.buyARecord(record1);
     assert.strictEqual(collector.countRecords(), 1);
+    assert.strictEqual(collector.wallet, 10);
   });
 
   it('should not be able to buy record if not enough funds', function () {
@@ -94,16 +101,18 @@ describe('Collector', function () {
   it('should be able to sell record if it is in collection', function () {
     collector.addARecord(record1);
     collector.addARecord(record2);
-    collector.removeBytitle('Heartbreaker');
-    assert.strictEqual(collector.countRecords(), 1);
-    assert.deepStrictEqual(collector.collection, [record1])
+    collector.addMoney(100);
+    collector.sell('Heartbreaker');
+    // assert.strictEqual(collector.countRecords(), 1);
+    assert.deepStrictEqual(collector.collection, [record1]);
+    assert.strictEqual(collector.wallet, 125);
   });
 
   it('should not be able to sell record if it is not in collection', function () {
     collector.addARecord(record1);
     collector.addARecord(record2);
-    collector.removeBytitle('New Gods');
-    assert.strictEqual(collector.countRecords(), 2);
+    collector.sell('New Gods');
+    // assert.strictEqual(collector.countRecords(), 2);
     assert.deepStrictEqual(collector.collection, [record1, record2]);
   });
 });

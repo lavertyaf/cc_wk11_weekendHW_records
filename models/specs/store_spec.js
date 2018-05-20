@@ -7,9 +7,9 @@ describe('Store', function () {
 
   beforeEach(function () {
     store = new Store({
-      name 'Mudd',
+      name: 'Mudd',
       funds: 0,
-      collection: []
+      stock: []
     });
 
     record1 = new Record({
@@ -34,6 +34,7 @@ describe('Store', function () {
     });
   });
 
+
   it('should have a name', function () {
     assert.strictEqual(store.name, 'Mudd');
   });
@@ -44,24 +45,35 @@ describe('Store', function () {
 
   it('should be able to add funds', function () {
     store.addFunds(50);
-    assert.strictEqual(store.funds(), 50);
+    assert.strictEqual(store.funds, 50);
   });
 
   it('should have empty collection', function () {
-    assert.strictEqual(store.countRecords, 0);
+    assert.strictEqual(store.countRecords(), 0);
   });
 
   it('should be able to add to collection', function () {
     store.addARecord(record1);
-    assert.strictEqual(store.countRecords, 1);
-    assert.strictEqual(store.collection, [record1]);
+    assert.strictEqual(store.countRecords(), 1);
+    assert.deepStrictEqual(store.stock, [record1]);
   });
+
+  it('should be able to remove from collection', function () {
+    store.addARecord(record1);
+    store.addARecord(record2);
+    store.removeFromStock(record1);
+    assert.strictEqual(store.countRecords(), 1);
+    assert.deepStrictEqual(store.stock, [record2]);
+  });
+
 
   it('should be able to sell if in stock', function () {
     store.addARecord(record1);
     store.addARecord(record2);
     store.addARecord(record3);
-    store.sellARecord(record2);
-    assert.strictEqual(store.countRecords, 2);
-    assert.strictEqual(store.collection, [record1, record3]);
+    store.sell(record2);
+    assert.strictEqual(store.countRecords(), 2);
+    assert.deepStrictEqual(store.stock, [record1, record3]);
+    assert.strictEqual(store.funds, 25);
   });
+});
